@@ -7,74 +7,91 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{font-size:14px;scroll-behavior:smooth}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Linux Libertine','Georgia','Times New Roman',Times,serif;font-size:0.875em;line-height:1.6;color:#202122;background:#fff}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Linux Libertine','Georgia','Times New Roman',Times,serif;font-size:0.875em;line-height:1.6;color:#202122;background:#eaecf0}
     a{color:#3366cc;text-decoration:none}
     a:hover{text-decoration:underline}
-    p{margin:0 0 .5em}
 
-    /* Sidebar */
-    #mw-navigation{float:left;width:160px;padding:8px 0 0 12px;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;background:#f8f9fa;border-right:1px solid #a2a9b1;z-index:100}
-    .mw-wiki-logo{display:block;width:50px;height:50px;margin:8px auto 12px;background:url('https://en.wikipedia.org/static/images/icons/wikipedia.png') center/contain no-repeat}
-    .mw-wiki-logo-text{text-align:center;font-size:11px;font-family:sans-serif;color:#202122;margin-bottom:12px;font-weight:bold}
-    .mw-portlet-label{font-family:sans-serif;font-size:11px;font-weight:bold;color:#54595d;border-bottom:1px solid #a2a9b1;padding:4px 0 2px;margin:8px 4px 4px 0}
-    .mw-portlet ul{list-style:none;padding:0;margin:0 0 8px 0}
+    /* ── TOP HEADER: logo + search only, no tabs ── */
+    #mw-head{position:fixed;top:0;left:0;right:0;height:50px;background:#fff;border-bottom:1px solid #a2a9b1;z-index:200;display:flex;align-items:center;padding:0 12px;gap:8px}
+    .mw-wiki-logo{display:block;width:40px;height:40px;flex-shrink:0;background:url('https://en.wikipedia.org/static/images/icons/wikipedia.png') center/contain no-repeat}
+    .mw-wiki-logo-text{font-size:11px;font-family:sans-serif;color:#54595d;font-weight:bold;white-space:nowrap;flex-shrink:0}
+    .mw-wiki-logo-text span{display:block;font-size:9px;font-weight:normal}
+    #mw-head-search{display:flex;align-items:center;gap:4px;margin-left:auto}
+    #mw-head-search input{padding:5px 10px;border:1px solid #a2a9b1;border-radius:2px;font-size:13px;width:240px;font-family:sans-serif;background:#fff}
+    #mw-head-search input:focus{outline:1px solid #3366cc;border-color:#3366cc}
+    #mw-head-search button{padding:5px 10px;border:1px solid #a2a9b1;background:#f8f9fa;cursor:pointer;border-radius:2px;font-family:sans-serif;font-size:13px;color:#202122}
+    #mw-head-search button:hover{background:#eaecf0}
+
+    /* ── LEFT SIDEBAR ── */
+    #mw-navigation{position:fixed;top:50px;left:0;width:172px;height:calc(100vh - 50px);overflow-y:auto;background:#f8f9fa;border-right:1px solid #a2a9b1;z-index:150;padding:8px 0 20px}
+    .mw-portlet{padding:4px 8px 0}
+    .mw-portlet-label{font-family:sans-serif;font-size:11px;font-weight:bold;color:#54595d;border-bottom:1px solid #a2a9b1;padding:4px 0 2px;margin-bottom:4px}
+    .mw-portlet ul{list-style:none;padding:0;margin:0 0 8px}
     .mw-portlet li{padding:1px 0}
     .mw-portlet a{font-size:12px;font-family:sans-serif;color:#3366cc}
 
-    /* Top bar */
-    #mw-head{position:fixed;top:0;left:160px;right:0;background:#f8f9fa;border-bottom:1px solid #a2a9b1;z-index:99;font-family:sans-serif;font-size:13px}
-    #p-namespaces ul{display:flex;list-style:none;padding:4px 8px 0;gap:2px}
-    #p-namespaces li a{display:block;padding:4px 10px;border:1px solid #a2a9b1;border-bottom:none;background:#fff;border-radius:3px 3px 0 0;color:#3366cc}
-    #p-namespaces li.selected a{background:#fff;font-weight:bold;color:#202122}
-    #mw-head-search{float:right;padding:6px 12px}
-    #mw-head-search input{padding:3px 6px;border:1px solid #a2a9b1;border-radius:2px;font-size:13px;width:220px}
-    #mw-head-search button{padding:3px 8px;margin-left:4px;border:1px solid #a2a9b1;background:#f8f9fa;cursor:pointer;border-radius:2px}
+    /* ── OUTER LAYOUT ── */
+    #mw-page-base{position:fixed;top:50px;left:172px;right:0;bottom:0;background:#fff;z-index:-1}
+    #content{margin-left:172px;padding-top:50px;background:#fff;min-height:calc(100vh - 50px)}
 
-    /* Content */
-    #content{margin-left:160px;padding-top:42px}
+    /* ── CONTENT HEADER TABS (inside content, not fixed) ── */
+    #content-top{border-bottom:1px solid #a2a9b1;background:#fff;padding:0 20px;display:flex;align-items:flex-end;justify-content:space-between;min-height:34px}
+    #p-namespaces{display:flex;align-items:flex-end}
+    #p-namespaces ul{display:flex;list-style:none;padding:0;margin:0;gap:0;align-items:flex-end}
+    #p-namespaces li a{display:block;padding:6px 12px 5px;border:1px solid #a2a9b1;border-bottom:none;background:#eaecf0;border-radius:3px 3px 0 0;color:#54595d;font-family:sans-serif;font-size:13px;margin-right:2px;position:relative;bottom:-1px;text-decoration:none}
+    #p-namespaces li a:hover{background:#e2e9f5;color:#3366cc}
+    #p-namespaces li.selected a{background:#fff;color:#202122;font-weight:normal;border-bottom:1px solid #fff;z-index:1}
+    #p-views{display:flex;align-items:flex-end}
+    #p-views ul{display:flex;list-style:none;padding:0;margin:0;gap:0}
+    #p-views li a{display:block;padding:6px 10px 5px;border:1px solid transparent;border-bottom:none;color:#54595d;font-family:sans-serif;font-size:13px;position:relative;bottom:-1px;text-decoration:none}
+    #p-views li a:hover{color:#3366cc;border-color:#a2a9b1;background:#eaecf0;border-radius:3px 3px 0 0}
+    #p-views li.selected a{border-color:#a2a9b1;background:#fff;color:#202122;border-radius:3px 3px 0 0;border-bottom:1px solid #fff;z-index:1}
+
+    /* ── ARTICLE BODY ── */
     #mw-content-text{max-width:960px;padding:16px 20px 40px}
-    .mw-content-ltr h1{font-family:'Linux Libertine','Georgia',serif;font-size:1.95em;font-weight:normal;border-bottom:1px solid #a2a9b1;margin-bottom:.3em;padding-bottom:.1em;line-height:1.3}
-    .mw-content-ltr h2{font-family:'Linux Libertine','Georgia',serif;font-size:1.5em;font-weight:normal;border-bottom:1px solid #a2a9b1;margin:.6em 0 .25em;padding-bottom:.1em;clear:none}
-    .mw-content-ltr h3{font-size:1.15em;font-weight:bold;margin:.5em 0 .2em}
-    .mw-content-ltr p{margin:.3em 0 .4em}
+    .mw-content-ltr h1{font-family:'Linux Libertine','Georgia',serif;font-size:2em;font-weight:normal;border-bottom:1px solid #a2a9b1;margin-bottom:.4em;padding-bottom:.15em;line-height:1.3;color:#202122}
+    .mw-content-ltr h2{font-family:'Linux Libertine','Georgia',serif;font-size:1.5em;font-weight:normal;border-bottom:1px solid #a2a9b1;margin:1em 0 .3em;padding-bottom:.1em;clear:none;color:#202122}
+    .mw-content-ltr h3{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:1.1em;font-weight:bold;margin:.7em 0 .2em;color:#202122}
+    .mw-content-ltr p{margin:.4em 0 .5em;font-family:-apple-system,BlinkMacSystemFont,'Linux Libertine','Georgia',serif}
+    #siteSub{font-family:sans-serif;font-size:.85em;color:#54595d;margin:.1em 0 .5em;display:block}
 
-    /* Infobox */
+    /* ── INFOBOX ── */
     .infobox{float:right;clear:right;margin:0 0 1em 1.5em;padding:0;border:1px solid #a2a9b1;background:#f8f9fa;font-size:.9em;line-height:1.5;width:280px}
-    .infobox-above{background:#cee0f2;font-weight:bold;font-size:1.1em;text-align:center;padding:6px 8px;font-family:sans-serif}
-    .infobox-subheader{background:#d9e9f9;text-align:center;padding:4px 8px;font-style:italic;font-family:sans-serif;font-size:.95em}
+    .infobox-above{background:#cee0f2;font-weight:bold;font-size:1.05em;text-align:center;padding:6px 8px;font-family:sans-serif;color:#202122}
+    .infobox-subheader{background:#d9e9f9;text-align:center;padding:4px 8px;font-style:italic;font-family:sans-serif;font-size:.95em;color:#202122}
     .infobox-image{text-align:center;padding:8px}
     .infobox-image img{max-width:220px;width:100%;border:1px solid #a2a9b1}
     .infobox-image-caption{font-size:.85em;color:#54595d;margin-top:4px;font-family:sans-serif}
     .infobox table{width:100%;border-collapse:collapse}
     .infobox tr{border-top:1px solid #eaecf0}
-    .infobox th{font-family:sans-serif;font-weight:bold;vertical-align:top;padding:4px 8px;white-space:nowrap;font-size:.9em;width:40%}
-    .infobox td{vertical-align:top;padding:4px 8px;font-size:.9em}
+    .infobox th{font-family:sans-serif;font-weight:bold;vertical-align:top;padding:4px 8px;white-space:nowrap;font-size:.9em;width:40%;color:#202122}
+    .infobox td{vertical-align:top;padding:4px 8px;font-size:.9em;color:#202122}
 
-    /* TOC */
-    #toc{float:right;clear:right;background:#f8f9fa;border:1px solid #a2a9b1;padding:8px 16px;margin:0 0 1em 1.5em;font-size:.9em;min-width:200px}
-    #toc h3{font-size:1em;font-weight:bold;font-family:sans-serif;margin-bottom:4px}
+    /* ── TABLE OF CONTENTS ── */
+    #toc{float:right;clear:right;background:#f8f9fa;border:1px solid #a2a9b1;padding:10px 16px;margin:0 0 1em 1.5em;font-size:.9em;min-width:200px}
+    #toc h3{font-size:1em;font-weight:bold;font-family:sans-serif;margin-bottom:6px}
     #toc ol,#toc ul{padding-left:1.2em;margin:0}
     #toc li{margin:.2em 0;font-family:sans-serif}
     #toc a{color:#3366cc}
     .tocsection-sub{font-size:.9em}
 
-    /* Wikitable */
-    .wikitable{border-collapse:collapse;border:1px solid #a2a9b1;margin:.5em 0 1em;font-size:.9em;width:100%}
-    .wikitable th{background:#eaecf0;border:1px solid #a2a9b1;padding:5px 8px;font-family:sans-serif;font-weight:bold;text-align:left}
-    .wikitable td{border:1px solid #a2a9b1;padding:5px 8px;vertical-align:top}
-    .wikitable tr:hover td{background:#f0f0f0}
+    /* ── WIKITABLE ── */
+    .wikitable{border-collapse:collapse;border:1px solid #a2a9b1;margin:.5em 0 1em;font-size:.9em;width:100%;background:#fff}
+    .wikitable th{background:#eaecf0;border:1px solid #a2a9b1;padding:5px 8px;font-family:sans-serif;font-weight:bold;text-align:left;color:#202122}
+    .wikitable td{border:1px solid #a2a9b1;padding:5px 8px;vertical-align:top;color:#202122}
+    .wikitable tr:hover td{background:#f0f4fa}
     .wikitable caption{font-weight:bold;padding:.3em;font-family:sans-serif;font-size:.9em;text-align:left}
 
-    /* Gallery */
-    .wikimedia-gallery{display:flex;flex-wrap:wrap;gap:6px;margin:.5em 0}
-    .gallery-item{border:1px solid #a2a9b1;background:#f8f9fa;padding:6px;text-align:center;width:calc(33% - 6px);min-width:160px}
+    /* ── GALLERY ── */
+    .wikimedia-gallery{display:flex;flex-wrap:wrap;gap:8px;margin:.5em 0}
+    .gallery-item{border:1px solid #a2a9b1;background:#f8f9fa;padding:6px;text-align:center;width:calc(33% - 8px);min-width:160px}
     .gallery-item img{max-width:100%;height:150px;object-fit:cover;border:1px solid #a2a9b1}
     .gallery-caption{font-size:.8em;font-family:sans-serif;color:#54595d;margin-top:4px}
 
-    /* Blockquote */
-    blockquote{border-left:3px solid #a2a9b1;margin:.3em 0 .3em 1.2em;padding:.15em .6em;color:#54595d;font-style:italic}
+    /* ── BLOCKQUOTE ── */
+    blockquote{border-left:3px solid #a2a9b1;margin:.4em 0 .4em 1.5em;padding:.2em .8em;color:#54595d;font-style:italic;background:#f9f9f9}
 
-    /* References */
+    /* ── REFERENCES ── */
     .reflist{column-count:2;column-gap:2em;font-size:.9em;font-family:sans-serif}
     .reflist ol{padding-left:1.4em;margin:0}
     .reflist li{margin:.2em 0}
@@ -82,24 +99,22 @@
     sup.reference{font-size:.75em;line-height:0}
     sup.reference a{color:#3366cc}
 
-    /* Short description */
-    .shortdescription{font-family:sans-serif;font-size:.85em;color:#54595d;margin-bottom:.5em}
+    /* ── MISC ── */
+    .shortdescription{font-family:sans-serif;font-size:.85em;color:#54595d;margin-bottom:.6em;display:block}
+    .award-badge{display:inline-block;background:#ffd700;color:#333;border-radius:3px;font-size:.8em;padding:1px 6px;font-family:sans-serif;font-weight:bold;margin-left:4px}
+    #catlinks{border:1px solid #a2a9b1;background:#f8f9fa;padding:6px 10px;margin:1.5em 0 0;font-size:.9em;font-family:sans-serif;clear:both}
+    #catlinks a{color:#3366cc}
 
-    /* Footer */
-    #footer{margin-left:160px;border-top:1px solid #a2a9b1;padding:12px 20px;font-size:.85em;font-family:sans-serif;color:#54595d;background:#f8f9fa}
+    /* ── FOOTER ── */
+    #footer{margin-left:172px;border-top:1px solid #a2a9b1;padding:12px 20px;font-size:.85em;font-family:sans-serif;color:#54595d;background:#f8f9fa}
     #footer ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none}
     #footer a{color:#3366cc}
 
-    /* Categories */
-    #catlinks{border:1px solid #a2a9b1;background:#f8f9fa;padding:6px 10px;margin-top:1em;font-size:.9em;font-family:sans-serif}
-
-    /* Award badge */
-    .award-badge{display:inline-block;background:#ffd700;color:#333;border-radius:3px;font-size:.8em;padding:1px 6px;font-family:sans-serif;font-weight:bold;margin-left:4px}
-
+    /* ── MOBILE ── */
     @media(max-width:768px){
       #mw-navigation{display:none}
       #content,#footer{margin-left:0}
-      #mw-head{left:0}
+      #mw-page-base{left:0}
       .infobox{float:none;width:100%;margin:0 0 1em}
       #toc{float:none;width:100%;margin:0 0 1em}
       .reflist{column-count:1}
@@ -130,17 +145,16 @@
   </div>
 </div>
 
-<!-- Top bar -->
+<!-- Top bar: logo + search only (tabs moved into content area) -->
 <div id="mw-head">
-  <div id="p-namespaces">
-    <ul>
-      <li class="selected"><a href="#">Article</a></li>
-      <li><a href="#">Talk</a></li>
-      <li style="margin-left:auto"><a href="#">Read</a></li>
-      <li><a href="#">Edit</a></li>
-      <li><a href="#">View history</a></li>
-    </ul>
+  <a class="mw-wiki-logo" href="https://en.wikipedia.org" title="Wikipedia"></a>
+  <div class="mw-wiki-logo-text">Wikipedia<span>The Free Encyclopedia</span></div>
+  <div id="mw-head-search">
+    <input type="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia"/>
+    <button type="button">&#128269;</button>
   </div>
+</div>
+
   <div id="mw-head-search">
     <input type="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia"/>
     <button type="button">Search</button>
@@ -149,9 +163,25 @@
 
 <!-- Main content -->
 <div id="content">
-<div id="mw-content-text" class="mw-content-ltr">
+  <div id="content-top">
+    <div id="p-namespaces">
+      <ul>
+        <li class="selected"><a href="#">Article</a></li>
+        <li><a href="#">Talk</a></li>
+      </ul>
+    </div>
+    <div id="p-views">
+      <ul>
+        <li class="selected"><a href="#">Read</a></li>
+        <li><a href="#">Edit</a></li>
+        <li><a href="#">View history</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="mw-content-text" class="mw-content-ltr">
 
   <h1>Shobharani Polasa</h1>
+  <span id="siteSub">From Wikipedia, the free encyclopedia</span>
   <div class="shortdescription">American data scientist, AI researcher, and IEEE-published author</div>
 
   <!-- Infobox -->
